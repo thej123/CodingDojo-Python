@@ -8,6 +8,7 @@ for x in range(0,6):
         # turn the pointer 90 degrees to the right
         turtle.right(90)
         # advance according to set distance
-        turtle.circle(DIST)
+        turtle.circle (DIST)
     # add to set distance
     DIST += 20
+    
