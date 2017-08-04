@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Dojo Survey</title>
+    </head>
+    <body>
+      <form action='/result' method='post'>
+          Name: <input type='text' name='name'>
+           Dojo Location: <select name='location'>
+              <option value = "san jose">San Jose</option>
+              <option value = "new york">New York</option>
+            </select>
+          Favourite Language: <select name='language'>
+              <option value = "python">Python</option>
+              <option value = "java">Java</option>
+            </select> 
+            <textarea name = "comment" rows="5" cols="10"></textarea>
+          <input type='submit' value='create user'>
+      </form>
+    </body>
+</html>
