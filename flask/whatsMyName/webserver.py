@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 app = Flask(__name__)
+app.secret_key = "ThisIsSecret"
 
 @app.route("/")
 def index():
@@ -8,8 +9,12 @@ def index():
 @app.route("/process", methods = ["POST"])
 def process():
     print "Got Post Info"
-    name = request.form["name"]
-    email = request.form["email"]
-    return redirect("/")
+    session['name'] = request.form["name"]
+    session['email'] = request.form["email"]
+    return redirect("/show")
+
+@app.route("/show")
+def show_user():
+    return render_template("success.html")
 
 app.run(debug = True)

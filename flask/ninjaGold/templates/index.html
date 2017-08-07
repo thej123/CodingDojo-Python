@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+</head>
+<body>
+    <p>Your Gold: <input type='text' value='{{ total }}'></p>
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="farm" />
+        Farm: (earns 10-20 golds) <input type="submit" value="Find Gold!"/>
+    </form>
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="cave" />
+        Cave: (earns 5-10 golds)  <input type="submit" value="Find Gold!"/>
+    </form>
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="house" />
+        House: (earns 2-5 golds) <input type="submit" value="Find Gold!"/>
+    </form>
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="casino" />
+        Casino: (earns/takes 0-50 golds) <input type="submit" value="Find Gold!"/>
+    </form>
+
+    <textarea>Earned {{gold}} golds from the {{building}}</textarea>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="reset" />
+        <input type="submit" value="RESET YOUR GOLD"/>
+    </form>
+
+</body>
+</html>

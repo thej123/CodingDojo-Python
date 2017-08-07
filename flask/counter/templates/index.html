@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Counter</title>
+</head>
+<body>
+    <form method='post' action ='/process'>
+        <!-- <button>count</button> -->
+    </form>  
+    <form method='post' action ='/processTwo'>
+         <button>count2</button> 
+    </form>  
+    <form method='post' action ='/processReset'>
+         <button>reset</button> 
+    </form>  
+    <p>Counter</p>
+    <p>{{session['count']}} times.</p>
+</body>
+</html>
