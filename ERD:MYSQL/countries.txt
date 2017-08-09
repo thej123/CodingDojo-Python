@@ -1,0 +1,12 @@
+1.
+
+SELECT name AS Country, language AS Language, percentage FROM countries
+LEFT JOIN languages
+ON countries.id = languages.country_id
+WHERE language = 'Slovene'
+ORDER BY percentage DESC;
+
+2.
+
+
+
