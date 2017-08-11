@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Email Validation</title>
+        <style>
+            body{
+                padding: 10px;
+                margin: 20px 30%; 
+                /* display: inline-block; */
+            }
+            #submit{
+                margin-left: 40%;
+                margin-top: 20px;
+            }
+            p{
+                background-color: red;
+                display: inline-block;
+                border: 1px solid black;
+                margin-left: 10%;
+            }
+
+
+
+        </style>
+    </head>
+    <body>
+        <!-- <p> -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- </p> -->
+        <form action='/process' method='POST'>
+            <label>Email Address <input type='text' name='email'></label><br>
+            <input id='submit' type='submit' value='Submit'>
+        </form>
+    </body>
+</html>

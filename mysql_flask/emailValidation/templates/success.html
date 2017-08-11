@@ -1,0 +1,53 @@
+<html>
+    <head><title>Email Validation Success</title>
+        <style>
+            body{
+                padding: 10%;
+                margin: 20px; 
+                /* display: inline-block; */
+            }
+            a{
+                margin-left: 20%;
+                margin-bottom: 40%; 
+            }
+            p{
+                background-color: green;
+                display: inline-block;
+                border: 1px solid black;
+                margin-left: 10%;
+            }
+            h2{
+                text-decoration: underline;
+            }
+            table,th,td {
+                padding: 0px 10px;
+            }
+            
+
+
+
+        </style>
+    </head>
+    <body>
+        <!-- <p border='1px solid black'> The email address you entered {{Email}} is a VALID email address! Thank you!</p> -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <h2>Email addresses Entered:</h2>
+        <table>
+            <tr><th></th><th></th></tr>
+        {% for email in all_emails: %}
+        <tr>
+            <td>{{ email ['email'] }}</td>
+            <td id='space'>{{ email ['created_at'].strftime( '%m' '/' '%d' '/' '%Y' ' ' '%-I' ':' '%-M' ' ' '%p')}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        <a href='/goback'>Go Back</a>
+    </body>
+</html>

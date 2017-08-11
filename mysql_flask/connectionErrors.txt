@@ -1,0 +1,17 @@
+Error:
+OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: NO)")
+Fix:
+Make sure you supplied the correct password value to self.config.password
+
+Error:
+OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'tkodiyat'@'localhost' (using password: YES)")
+Fix:
+Make sure you supplied the correct user value to self.config.user
+
+Error:
+ValueError: invalid literal for int() with base 10: ''
+Fix:
+Make sure you supplied the any port value to self.config.port
+
+
+
