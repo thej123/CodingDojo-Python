@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Session Words</title>
+    <style>
+        div{
+            display: inline-block;
+            vertical-align: top;
+            width: 40%;
+        }
+        .big{
+            font-size: 2em;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <form action='/sessionWordsApp/add' method='post'>
+            {% csrf_token %}
+            <h2>Add a new word</h2><br>
+            <input type='text' name='word'>
+            <p>Choose color</p>
+            <ul type='circle'>
+                <input type ='radio' name='color' value='red'>Red<br>
+                <input type ='radio' name='color' value='green'>Green<br>
+                <input checked='checked' type ='radio' name='color' value='blue'>Blue<br>
+            </ul>
+            <input type='checkbox'name='bold'> show in BIG fonts!<br>
+            <input type='submit' value='Add to Session'>
+        </form>
+    </div>
+    <div>
+         <a href='/sessionWordsApp/clear'><button>Clear Session</button></a>
+         {% for x in request.session.words %}
+         <li><span style='color:{{ x.color }}' class='{{ x.big }}'> {{ x.word }}</span> - added at {{ x.created_at }}</li>
+         {% endfor %}
+
+    </div>
+
+
+</body>
+</html>

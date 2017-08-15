@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout</title>
+</head>
+<body>
+    <p>Thank you for your business!</p>
+    <p>We charged your credit card for {{ request.session.total }}</p>
+    <p>You have ordered {{ request.session.number_of_items }} items so far and spent {{ request.session.total_cost }} with amadon.com!</p>
+    <br><br>
+     <a href='/'><button>Go Back</button></a><br><br>
+     <a href='/amadon/reset'><button>Reset</button></a>
+
+</body>
+</html>

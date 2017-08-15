@@ -16,20 +16,31 @@
     {% endwith %}
 
     <h2>CodingDojo Wall</h2>
-    {% for user in user_data %}
-    <p>Welcome {{ user.first_name }}</p>
+    <p>Welcome {{ firstname }}</p>
     
     <a href=/logoff><buton>Log off</buton></a>
 
-    <form action='/user/message/{{user.id}}' method='post'>
+    <form action='/message' method='post'>
         <h3>Post a message</h3>
-        <textarea rows="4" cols="100" name='message'>
+        <textarea name='message'>
         </textarea><br>
         <input type="submit" value="Post a message">
     </form>
 
     <ul>
-        <li> {{ user.first_name }}{{ user.last_name}} - {{ user ['created_at'].strftime( '%m' ' ' '%d' 'rd' ' ''%Y')}} <br></li>
+         {% for post in display_this %} 
+        <td>{{post.display_post_header}}</td> <br> 
+        <form action='/comment' method='post'>
+            <h4>Post a comment</h4>
+            <textarea name='comment'>
+            </textarea><br>
+            <input type='hidden' name='hidden_message_id' value={{post.messageIDS}}>
+            <input type="submit" value="Post a comment">
+        </form>
+        <br> <br> 
+        
+
+         {% endfor %} 
     </ul>
             
 
@@ -38,7 +49,6 @@
 
 
 
-    {% endfor %}
 
     
 </body>
