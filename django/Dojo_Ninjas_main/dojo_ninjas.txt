@@ -1,0 +1,65 @@
+from __future__ import unicode_literals
+
+from django.db import models
+
+# Create your models here.
+
+class Dojo(models.Model):
+    name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+
+class Ninja(models.Model):
+    dojo = models.ForeignKey(Dojo, related_name = 'ninja')
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py shell
+>>> from apps.dojo_ninjas.models import *
+
+>>> Dojo.objects.create(name='CodingDojo Silicon Valley', city='Mountain View', state='CA')
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name='CodingDojo Seattle', city='Seattle', state='WA')
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name='CodingDojo New York', city='New York', state='NY')
+<Dojo: Dojo object>
+
+>>> Dojo.objects.create(name='CodingDojo', city='New York', state='NY')
+<Dojo: Dojo object>
+>>> Dojo.objects.get(id=4).delete()
+(1, {u'dojo_ninjas.Ninja': 0, u'dojo_ninjas.Dojo': 1})
+
+
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=1), first_name='thej', last_name='kodiyat')
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=1), first_name='tanvi', last_name='vivi')
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=2), first_name='mark', last_name='matt')
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=2), first_name='ravi', last_name='dude')
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=3), first_name='ranth', last_name='shrey')
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo=Dojo.objects.get(id=3), first_name='siri', last_name='juttu')
+<Ninja: Ninja object>
+
+Dojo.objects.first().ninja.all().values()
+>>> Dojo.objects.last().ninja.all().values()
+
+class desc(models.Model):
+    desc = models.TextField()
+
+(djangoEnv) tkodiyat-macbookpro:Dojo_Ninjas_main tkodiyat$ python manage.py makemigrations
+Migrations for 'dojo_ninjas':
+  apps/dojo_ninjas/migrations/0002_desc.py:
+    - Create model desc
+(djangoEnv) tkodiyat-macbookpro:Dojo_Ninjas_main tkodiyat$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions
+Running migrations:
+  Rendering model states... DONE
+  Applying dojo_ninjas.0002_desc... OK
+(djangoEnv) tkodiyat-macbookpro:Dojo_Ninjas_main tkodiyat$ 

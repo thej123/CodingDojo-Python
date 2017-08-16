@@ -1,0 +1,172 @@
+from __future__ import unicode_literals
+
+from django.db import models
+
+# Create your models here.
+
+1.
+
+class Book(models.Model):
+    name = models.CharField(max_length=255)
+    desc = models.Textfield()
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+2.
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email_name = models.EmailField(max_length=255)
+    books = models.ManyToManyField(Book, related_name = 'authors')
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+3.
+
+Migrations for 'booksAuthors':
+  apps/booksAuthors/migrations/0001_initial.py:
+    - Create model Author
+    - Create model Book
+    - Add field books to author
+(djangoEnv) tkodiyat-macbookpro:booksAuthors_main tkodiyat$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, booksAuthors, contenttypes, sessions
+Running migrations:
+  Rendering model states... DONE
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying booksAuthors.0001_initial... OK
+  Applying sessions.0001_initial... OK
+(djangoEnv) tkodiyat-macbookpro:booksAuthors_main tkodiyat$ 
+
+4.1
+
+>>> Book.objects.create(name='C Sharp', desc='be sharp')
+<Book: Book object>
+>>> Book.objects.create(name='C Java', desc='ocean')
+<Book: Book object>
+>>> Book.objects.create(name='Python', desc='snake')
+<Book: Book object>
+>>> Book.objects.create(name='PHP', desc='hp bro')
+<Book: Book object>
+>>> Book.objects.create(name='Ruby', desc='rare')
+<Book: Book object>
+
+4.2
+
+>>> Author.objects.create(first_name = 'Mike')
+<Author: Author object>
+>>> Author.objects.create(first_name = 'Speros')
+<Author: Author object>
+>>> Author.objects.create(first_name = 'John')
+<Author: Author object>
+>>> Author.objects.create(first_name = 'Jadee')
+<Author: Author object>
+>>> Author.objects.create(first_name = 'Jay')
+<Author: Author object>
+
+4.3
+
+notes = models.TextField()
+
+(djangoEnv) tkodiyat-macbookpro:booksAuthors_main tkodiyat$ python manage.py makemigrations
+You are trying to add a non-nullable field 'notes' to author without a default; we can't do that (the database needs something to populate existing rows).
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit, and let me add a default in models.py
+Select an option: default=''
+Please select a valid option: default = ' '               
+Please select a valid option: 1
+Please enter the default value now, as valid Python
+The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+Type 'exit' to exit this prompt
+>>> ''
+Migrations for 'booksAuthors':
+  apps/booksAuthors/migrations/0002_author_notes.py:
+    - Add field notes to author
+(djangoEnv) tkodiyat-macbookpro:booksAuthors_main tkodiyat$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, booksAuthors, contenttypes, sessions
+Running migrations:
+  Rendering model states... DONE
+  Applying booksAuthors.0002_author_notes... OK
+(djangoEnv) tkodiyat-macbookpro:booksAuthors_main tkodiyat$ 
+
+4.4
+
+>>> from apps.booksAuthors.models import *
+>>> x = Book.objects.get(id=5)
+>>> x.name
+u'Ruby'
+>>> x.name='C#'
+>>> x.save()
+>>> Book.objects.get(id=5)
+<Book: Book object>
+>>> Book.objects.get(id=5).name
+u'C#'
+>>> 
+
+4.5
+
+>>> x = Author.objects.get(id=5)
+>>> x.first_name
+u'Jay'
+>>> x.first_name = 'Ketul'
+>>> x.save()
+>>> Author.objects.get(id=5)
+<Author: Author object>
+>>> Author.objects.get(id=5).first_name
+u'Ketul'
+>>> 
+
+4.6
+>>> Book.objects.get(id=1).authors.add(Author.objects.get(id=1))
+>>> Book.objects.get(id=2).authors.add(Author.objects.get(id=1))
+
+4.7
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=3))
+
+4.8
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=3))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=4))
+
+4.9
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=3))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=4))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=5))
+
+4.10
+Book.objects.get(id=3).authors.values()
+
+4.11
+this book does not have the first author so removed hte author at id=2
+>>> x =Book.objects.get(id=3).authors
+>>> x.get(id=2).delete()
+(4, {u'booksAuthors.Author': 1, u'booksAuthors.Author_books': 3})
+>>> Book.objects.get(id=3).authors.values()
+
+4.12
+>>> Author.objects.get(id=5).books.add(Book.objects.get(id=2))
+
+4.13
+>>> Author.objects.get(id=3).books.values()
+
+4.14
+>>> Author.objects.get(id=2).books.values()

@@ -1,0 +1,84 @@
+1.
+
+class User(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+class Book(models.Model):
+    name = models.CharField(max_length=255)
+    desc = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    uploader = models.ForeignKey(User, related_name='uploaded_books')
+    liked_users = models.ManyToManyField(User, related_name='liked_books')
+
+(djangoEnv) tkodiyat-macbookpro:likes_books_main tkodiyat$ python manage.py makemigrations
+Migrations for 'likes_books':
+  apps/likes_books/migrations/0001_initial.py:
+    - Create model Book
+    - Create model User
+    - Add field liked_users to book
+    - Add field uploader to book
+
+2.
+
+>>> User.objects.create(first_name='Thej',last_name='Kodiyat',email='tkgmailcom')
+<User: User object>
+>>> User.objects.create(first_name='Sarah',last_name='Katt',email='skgmailcom')
+<User: User object>
+>>> User.objects.create(first_name='Liam',last_name='Matt',email='lmgmailcom')
+<User: User object>
+
+3.
+
+>>> Book.objects.create(name='Beauty', desc='about beauty', uploader=User.objects.get(id=1))
+<Book: Book object>
+>>> Book.objects.create(name='Apple', desc='about apple', uploader=User.objects.get(id=1))
+<Book: Book object>
+
+4.
+>>> Book.objects.create(name='Monkey', desc='about monkey', uploader=User.objects.get(id=2))
+<Book: Book object>
+>>> Book.objects.create(name='Donkey', desc='about donkey', uploader=User.objects.get(id=2))
+<Book: Book object>
+
+5.
+>>> Book.objects.create(name='Whales', desc='about whales', uploader=User.objects.get(id=3))
+<Book: Book object>
+>>> Book.objects.create(name='Dolphins', desc='about dolphins', uploader=User.objects.get(id=3))
+<Book: Book object>
+
+6.
+>>> User.objects.get(id=1).liked_books.add(Book.objects.last())
+>>> User.objects.get(id=1).liked_books.add(Book.objects.first())
+
+7.
+>>> User.objects.get(id=2).liked_books.add(Book.objects.get(id=3))
+>>> User.objects.get(id=2).liked_books.add(Book.objects.first())
+
+8.
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=1))
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=2))
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=3))
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=4))
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=5))
+>>> User.objects.get(id=3).liked_books.add(Book.objects.get(id=6))
+
+9.
+Book.objects.get(id=1).liked_users.values('first_name')
+<QuerySet [{'first_name': u'Thej'}, {'first_name': u'Sarah'}, {'first_name': u'Liam'}]>
+
+10.
+Book.objects.get(id=1).uploader.first_name
+u'Thej'
+
+11.
+Book.objects.get(id=2).liked_users.values('first_name')
+<QuerySet [{'first_name': u'Liam'}]>
+
+12.
+>>> Book.objects.get(id=2).uploader.first_name
+u'Thej'
