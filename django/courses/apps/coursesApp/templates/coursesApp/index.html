@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Courses Index</title>
+</head>
+<body>
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Add a new course</h2>
+    <form action='/coursesApp/add' method='POST'>
+        {% csrf_token %}
+        Name: <input type='text' name='name'><br>
+        Description: <textarea name='desc'></textarea><br>
+        <input type='submit' value="Add">
+    </form>
+
+    <h2>Courses</h2>
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for x in data %}
+            <tr>
+                <td>{{ x.name }}</td>
+                <td>{{ x.desc }}</td>
+                <td>{{ x.created_at }}</td>
+                <td><a href='check/{{x.id}}'>remove</a></td>
+            </tr>
+        {% endfor %}
+</body>
+</html>
