@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'beltreviewer/style.css' %}">
+    <title>Books</title>
+</head>
+<body>
+    <h1> Welcome {{ user.alias }}!</h1>
+    {% if messages %} 
+        {% for message in messages %}
+            <h2>{{ message }}</h2>
+        {% endfor %} 
+    {% endif %} 
+    <a href='/beltreviewer/add'>Add Book and Review</a>
+    <a href='/beltreviewer/logout'>Logout</a>
+</body>
+</html>

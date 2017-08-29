@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <title>Post</title>
+</head>
+<body style='padding:10px'>
+    <h1>My Posts</h1>
+    <div id='placeholder'></div>
+    <p>Add a note:</p>
+    <form action='/ajaxpost/create' method='post' id='create_post'>
+        {% csrf_token %}
+        <textarea cols='50' rows='10' name='notes'></textarea><br><br>
+        <input type='submit' value='Post It!'>
+    </form> 
+
+    <script>
+        $('#create_post').submit(function(e){
+            e.preventDefault()
+            console.log('prevent refresh')
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(serverResponse){
+                    console.log('success function', serverResponse)
+                    $('#placeholder').append(serverResponse)
+                }
+            })
+        })
+
+
+    </script>
+</body>
+</html>

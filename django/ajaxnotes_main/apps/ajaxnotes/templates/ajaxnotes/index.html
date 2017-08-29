@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <title>Notes</title>
+     <!-- <style>
+        body{
+            text-align: center;
+        }
+    </style>   -->
+</head>
+<body>
+    {% for note in notes %}
+    <div class='update'>
+        <h2>{{note.title}}</h2>
+        <form action='/ajaxnotes/delete/{{note.id}}' method='post' id='delete_post'>
+            {% csrf_token %}
+            <input type='submit' value='Delete'>
+        </form>
+        <p style='border:1px solid black; padding:10px; width:200px; height:200px;'>{{note.desc}}</p>
+    {% endfor %}
+    <div id='placeholder'></div>
+
+    <form action='ajaxnotes/create' method='post' id='create_note'>
+        {% csrf_token %}
+        <textarea cols='40' rows='10' name='desc'></textarea><br>
+        <input type='text' style='width:250px; height:20px;' name='title'><br>
+        <input type='submit' value='Add Note'>
+    </form>
+
+    <script>
+        $('#create_note').submit(function(e){
+            e.preventDefault()
+            console.log('1')
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(serverResponse){
+                    console.log('2')
+                    $('#placeholder').append(serverResponse)
+                }
+            })
+        });
+    </script>
+    <script>
+        $('#delete_post').submit(function(e){
+            e.preventDefault()
+            console.log('3')
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(serverResponse){
+                    console.log('4')
+                    $('#placeholder').append(serverResponse)
+                }
+            })
+        })
+    </script>
+    <script>
+        $('#ajax_first_name').keyup(function(){
+            console.log('came here')
+            console.log("parent's serialize() returned", $(this).parent().serialize())
+            $.ajax({
+                url: '/ajaxapp/find',
+                method: 'post',
+                data: $(this).parent().serialize(),
+                success: function(serverResponse){
+                    console.log('success', serverResponse),
+                    $('#placeholder2').html(serverResponse)
+                }
+            })
+        });
+    </script>
+</body>
+</html>

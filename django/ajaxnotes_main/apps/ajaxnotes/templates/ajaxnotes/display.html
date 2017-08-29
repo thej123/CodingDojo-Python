@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Display</title> 
+</head>
+<body>
+    <h2>{{note.title}}</h2>
+    <form action='/ajaxnotes/delete/{{note.id}}' method='post' id='delete_post'>
+        {% csrf_token %}
+        <input type='submit' value='Delete'>
+    </form>
+    <p style='border:1px solid black; padding:10px; width:200px; height:200px;'>{{note.desc}}</p>
+</body>
+</html>

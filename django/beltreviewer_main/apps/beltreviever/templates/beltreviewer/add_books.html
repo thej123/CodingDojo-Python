@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Books</title>
+    <style>
+        *{
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <a href='/beltreviewer/books'>Home</a>
+    <a href='/beltreviewer/logout'>Logout</a>
+    <p>Add a New Book Title and a Review:</p>
+    <form>
+        <label>Book Title: <input type='text' name='book_title'></label><br>
+        <label>Author:</label><br>
+        <label>Choose from the list:
+            <select>
+                <option name='author'>stephen king</option>
+                <option name='author'>second author</option>
+                <optioin name='author'>third author</optioin>
+            </select>
+        </label><br>
+        <label>Or add a new author: <input type='text' name='author'></label><br>
+        <label>Review: <br><textarea name='review'></textarea></label><br>
+        <label> Rating: 
+            <select>
+                <option name='rating'>1</option>
+                <option name='rating'>2</option>
+                <option name='rating'>3</option>
+                <option name='rating'>4</option>
+                <option name='rating'>5</option>
+            </select>
+            stars.
+        </label><br>
+        <input type='submit' value='Add Book and Review'><br>
+    </form>
+</body>
+</html>
